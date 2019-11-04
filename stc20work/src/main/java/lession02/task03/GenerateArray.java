@@ -1,9 +1,7 @@
 package lession02.task03;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Random;
-import java.util.Set;
 
 class GenerateArray {
 
@@ -19,6 +17,7 @@ class GenerateArray {
 
         namesWithSexMap.put("Ann", Person.sex.WOMAN);
         namesWithSexMap.put("Alex", Person.sex.MAN);
+       // namesWithSexMap.put("Alex", Person.sex.WOMAN);
         namesWithSexMap.put("Vasya", Person.sex.MAN);
         namesWithSexMap.put("Petya", Person.sex.MAN);
         namesWithSexMap.put("Alice", Person.sex.WOMAN);

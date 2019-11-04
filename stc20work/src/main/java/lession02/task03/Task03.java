@@ -16,30 +16,39 @@ public class Task03 {
         System.out.println("Task 03");
 
         GenerateArray generateArray = new GenerateArray();
-        Person[] people = generateArray.generatePersons(100);
-
-
-
+        Person[] people = generateArray.generatePersons(60);
+        Person[] peopleWithSameNames = null;
 
         System.out.println("-- started array");
-        for (Person person : people) {
-            System.out.print(person.toString());
+        String tempStringPerson = "";
+
+
+        for (int i = 0; i < people.length ; i++) {
+            System.out.print(people[i].toString());
+            if (people[i].getName() == tempStringPerson) {
+                peopleWithSameNames = people;
+               // System.out.println(peopleWithSameNames[i].toString());
+            }
+            tempStringPerson = people[i].getName();
         }
 
-//        for (int i = 0; i < people.length ; i++) {
-//            System.out.println(people[i].toString());
-//            if (people[i].getName().equals(people[i].getName()) ) {
-//                System.out.println("same name");
-//            }
-//        }
+
+        int tempAge = -1;
+        for (Person person : peopleWithSameNames) {
+            if (person.getAge() == tempAge) {
+                //System.out.println(person.toString());
+                throw new Exception("Same record - " + person.toString());
+            }
+            tempAge = person.getAge();
+        }
 
         System.out.println("|_First class");
         FirstSortClass firstSortClass = new FirstSortClass();
-        firstSortClass.mainSortWithTimer(people, 100);
+        firstSortClass.mainSortWithTimer(people, 60);
 
         System.out.println("|_Second class");
         SecondSortClass secondSortClass = new SecondSortClass();
-        secondSortClass.mainSortWithTimer(people, 100);
+        secondSortClass.mainSortWithTimer(people, 60);
 
     }
 
@@ -132,6 +141,5 @@ public class Task03 {
             return abcFirstPeople;
         }
     }
-
 
 }
