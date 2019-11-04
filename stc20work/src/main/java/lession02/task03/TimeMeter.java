@@ -8,11 +8,11 @@ public class TimeMeter {
     private long start;
     private long stop;
 
-    public TimeMeter(){
+    TimeMeter() {
         start = now();
     }
 
-    public void stop(){
+    public void stop() {
         stop = now();
     }
 
@@ -21,11 +21,11 @@ public class TimeMeter {
         return getDuration() + " msec";
     }
 
-    private long getDuration(){
+    private long getDuration() {
         return (stop == 0 ? now() : stop) - start;
     }
 
-    private long now(){
+    private long now() {
         return System.currentTimeMillis();
     }
 
