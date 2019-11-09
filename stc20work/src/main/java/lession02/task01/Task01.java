@@ -1,4 +1,4 @@
-package lession01.task01;
+package lession02.task01;
 
 import java.io.IOException;
 
