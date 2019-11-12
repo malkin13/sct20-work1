@@ -46,5 +46,4 @@ class GenerateArray {
         return people;
     }
 
-    //todo trow new exception when array contains same name and age
 }
