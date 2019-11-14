@@ -15,7 +15,6 @@ import java.util.*;
  */
 public class MathBox {
 
-
     public static void main(String[] args) {
 
         Integer[] array =  (Integer[]) getRandom(8,5);
@@ -78,7 +77,7 @@ public class MathBox {
     }
 
 
-     private static Number[] getRandom(int length, int range) {
+    private static Number[] getRandom(int length, int range) {
          Number[] rNumbers=new Number[length];
         for (int i = 0; i < length ; i++) {
 
