@@ -22,14 +22,14 @@ public class MathBox {
         //System.out.println();
     }
 
-    private void summator(List mathList){
+    private <T> T summator(Object input){
 
-       // mathList.forEach();
-
+        return null;
     }
 
-    private void splitter(){
+    private <T> T  splitter(Object input) {
 
+        return null;
     }
 
     private void remover(Integer element){
@@ -93,4 +93,8 @@ public class MathBox {
         return rNumbers;
     }
 
+    private static Number[] checkDuplicate(Number[] array) {
+        LinkedHashSet<Number> linkedHashSet = new LinkedHashSet<>(Arrays.asList(array));
+        return linkedHashSet.toArray(new Number[]{});
+    }
 }

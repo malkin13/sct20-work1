@@ -26,7 +26,7 @@ public class Task01 {
     }
 
     /**
-     * Work with files read and write
+     * Work with files, read and write
      * @throws IOException
      */
     static void fileWork() throws IOException {

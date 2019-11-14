@@ -9,17 +9,12 @@ import lombok.Setter;
 @Data
 public class Animal {
 
-    @Getter
-    @Setter
     private String uuid;
-    @Getter
-    @Setter
+
     private String name;
-    @Getter
-    @Setter
+
     private Person owner;
-    @Getter
-    @Setter
+
     private double weight;
 
     Animal() {
