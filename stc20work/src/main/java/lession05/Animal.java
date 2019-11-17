@@ -4,6 +4,9 @@ package lession05;
 import lession02.task03.Person;
 import lombok.Data;
 
+/**
+ * Data class for Animal
+ */
 @Data
 public class Animal {
 

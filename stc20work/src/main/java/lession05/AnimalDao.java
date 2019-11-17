@@ -2,10 +2,7 @@ package lession05;
 
 import lession02.task03.Person;
 
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -118,21 +115,18 @@ public class AnimalDao {
      * show all animals
      */
     public void getAllAnimals() {
-        animalSet.stream().sorted(Comparator.comparing(Animal::getOwner))
-                .collect(Collectors.toList());
+        animalSet.stream().sorted(new Comparator<Animal>() {
+            @Override
+            public int compare(Animal a1, Animal a2) {
+                return a1.getMoniker().compareTo(a2.getMoniker());
+            }
+        }).collect(Collectors.toList());
 
         for (Animal animal:animalSet ) {
             System.out.println(animal);
         }
 
+        //todo в отсортированном порядке. Поля для сортировки –  хозяин, кличка животного, вес.
 
-//        String result = "";
-//        Iterator<Animal> iterator = animalSet.iterator();
-//        while(iterator.hasNext()){
-//           // result =  iterator.next().toString();
-//            System.out.println( iterator.next() );
-//        }
-//        //todo в отсортированном порядке. Поля для сортировки –  хозяин, кличка животного, вес.
-//        //return result;
     }
 }
