@@ -6,10 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.LinkedHashSet;
-import java.util.Objects;
+import java.util.*;
 
 
 /**
@@ -54,6 +51,9 @@ public class Task01 {
         System.out.println("##### After Sort");
         Arrays.sort(lines);
         System.out.println(Arrays.toString(lines));
+        for (int i = 0; i < lines.length ; i++) {
+            lines[i] = lines[i].toLowerCase();
+        }
         System.out.println("##### After remove Duplicates");
         System.out.println(Arrays.toString(checkDuplicate(lines)));
 

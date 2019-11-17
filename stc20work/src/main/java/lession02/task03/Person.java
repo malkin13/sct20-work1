@@ -9,36 +9,48 @@ public class Person implements Comparable<Person> {
     private sex sex;
     private String name;
 
-    Person() {
+    public Person() {
+        this.age = age;
+        this.sex = sex;
+        this.name = name;
     }
 
     int getAge() {
         return age;
     }
 
-    void setAge(int age) {
+    public void setAge(int age) {
         this.age = age;
     }
 
-    Person.sex getSex() {
+    public Person.sex getSex() {
         return sex;
     }
 
-    void setSex(Person.sex sex) {
+    public void setSex(Person.sex sex) {
         this.sex = sex;
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 
-    void setName(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
+//    @Override
+//    public String toString() {
+//        return "Name: '" + this.name + "', Age: '" + this.age + "', Sex: '" + this.sex + "'" + "\n";
+//    }
+
     @Override
     public String toString() {
-        return "Name: '" + this.name + "', Age: '" + this.age + "', Sex: '" + this.sex + "'" + "\n";
+        return "Person {" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", sex=" + sex +
+                '}';
     }
 
     @Override

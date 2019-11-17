@@ -1,1 +1,1 @@
-[Cats, Dog, Duck, Elephant, Frog, cat, cats]
+[cats, dog, duck, elephant, frog, cat]

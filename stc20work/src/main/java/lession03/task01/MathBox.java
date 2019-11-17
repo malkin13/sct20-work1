@@ -1,6 +1,7 @@
 package lession03.task01;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 /**
  * Конструктор на вход получает массив Number. Элементы не могут повторяться.
@@ -16,49 +17,35 @@ import java.util.*;
 public class MathBox {
 
     public static void main(String[] args) {
-
-        Integer[] array =  (Integer[]) getRandom(8,5);
-        arrayCheck(array);
-        //System.out.println();
+        mb(getRandom(5,8));
     }
 
-    private <T> T summator(Object input){
-
-        return null;
-    }
-
-    private <T> T  splitter(Object input) {
-
-        return null;
-    }
-
-    private void remover(Integer element){
-
-    }
-
-    public static void arrayCheck(Integer[] array){
-        HashSet<Integer> used = new HashSet<>();
-
-        for(int i = 0; i < array.length; i++){
-            if(used.contains(array[i])){
-                continue;
-            } else {
-                used.add(array[i]);
-            }
-            ArrayList<Integer> positions = new ArrayList<>();
-            positions.add(i);
-            for(int j = i + 1; j < array.length; j++){
-
-                if(array[i] == array[j]){
-                    positions.add(j);
-                }
-            }
-            System.out.print(array[i] + " встречается в позициях " );
-            for(Integer p : positions){
-                System.out.print(p + ", ");
-            }
-            System.out.println();
+    public static void mb(Number[] array) {
+        System.out.println("---- toSet --- ");
+        Set<Number> tempSet = new HashSet<>();
+        for (Number elements: array         ) {
+            tempSet.add(elements);
         }
+        System.out.println(tempSet);
+        System.out.println("---- toSet --- ");
+       // summator(tempSet);
+       // splitter(tempSet,4.0);
+
+    }
+
+    private static void summator(Object input){
+        System.out.println("---- summ --- ");
+        Set<Number> sumResultSet =  new HashSet<>();
+        sumResultSet = (Set<Number>) input;
+        //IntStream.of(Arrays.asList(sumResultSet)).sum();
+
+       // sumResult.stream().map(Line::getLength).mapToInt(Number::intValue).sum();
+        System.out.println(sumResultSet);
+    }
+
+    private static  <T> T  splitter(Object input,double delimiter) {
+
+        return null;
     }
 
     @Override
@@ -71,14 +58,19 @@ public class MathBox {
         return super.equals(obj);
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
-    }
 
+    //    private void remover(Object input,Integer toRemove) {
+//        if (input.contains(toRemove)) {
+//            for (MyObject obj : input) {
+//                if (obj.equals(toRemove))
+//                    return obj;
+//            }
+//        }
+//    }
 
     private static Number[] getRandom(int length, int range) {
-         Number[] rNumbers=new Number[length];
+        System.out.println("---- rnd --- ");
+        Number[] rNumbers=new Number[length];
         for (int i = 0; i < length ; i++) {
 
             Object rnd = new Random().nextInt(range);
@@ -89,9 +81,38 @@ public class MathBox {
                 rNumbers[j] = rnd1;
             }
         }
-
+        System.out.println("---- rnd --- ");
         return rNumbers;
+
     }
+
+
+
+//
+//    public static void arrayCheck(Integer[] array){
+//        HashSet<Integer> used = new HashSet<>();
+//
+//        for(int i = 0; i < array.length; i++){
+//            if(used.contains(array[i])){
+//                continue;
+//            } else {
+//                used.add(array[i]);
+//            }
+//            ArrayList<Integer> positions = new ArrayList<>();
+//            positions.add(i);
+//            for(int j = i + 1; j < array.length; j++){
+//
+//                if(array[i] == array[j]){
+//                    positions.add(j);
+//                }
+//            }
+//            System.out.print(array[i] + " встречается в позициях " );
+//            for(Integer p : positions){
+//                System.out.print(p + ", ");
+//            }
+//            System.out.println();
+//        }
+//    }
 
     private static Number[] checkDuplicate(Number[] array) {
         LinkedHashSet<Number> linkedHashSet = new LinkedHashSet<>(Arrays.asList(array));
