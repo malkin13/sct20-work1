@@ -2,15 +2,23 @@ package lession05;
 
 import lession02.task03.Person;
 
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+/**
+ * object data access
+ */
 public class AnimalDao {
 
     public static final Set<Animal> animalSet =new HashSet<Animal>();
 
-
+    /**
+     * main method init
+     * @throws Exception
+     */
     public void initAnimals() throws Exception {
         Person elena = new Person();
         elena.setName("Elena");
@@ -45,15 +53,26 @@ public class AnimalDao {
 
     }
 
-    public Animal addAnimal(Animal animal) throws Exception {
+    /**
+     * Method to add Animal
+     * @param animal
+     * @return
+     * @throws Exception when already exist
+     */
+    public void addAnimal(Animal animal) throws Exception {
         if(animalSet.add(animal)){
             System.out.println("added"+ animal);
         }else{
-            throw new Exception("Animal not added, because it was already present");
+            throw new Exception("Animal not added, because it already exist");
         }
-        return animal;
     }
 
+    /**
+     * update animal find by ID remove, after than add
+     * @param id find by ID
+     * @param newAnimal animal to add
+     * @throws Exception when already exist
+     */
     public void updateAnimal(Integer id,Animal newAnimal) throws Exception {
         for (Animal animal:animalSet ) {
             if (animal.getId().equals(id)) {
@@ -63,6 +82,10 @@ public class AnimalDao {
         }
     }
 
+    /**
+     * remove animal
+     * @param animal to remove
+     */
     public void deleteAnimal(Animal animal) {
         boolean result = animalSet.remove(animal);
         if(result){
@@ -73,6 +96,10 @@ public class AnimalDao {
         animalSet.remove(animal);
     }
 
+    /**
+     * find Animal By Moniker
+     * @param animalMoniker  to find
+     */
     public void findAnimalByMoniker(String animalMoniker) {
         Iterator<Animal> iterator = animalSet.iterator();
         boolean found = false;
@@ -87,14 +114,25 @@ public class AnimalDao {
 
     }
 
+    /**
+     * show all animals
+     */
     public void getAllAnimals() {
-        String result = "";
-        Iterator<Animal> iterator = animalSet.iterator();
-        while(iterator.hasNext()){
-           // result =  iterator.next().toString();
-            System.out.println( iterator.next() );
+        animalSet.stream().sorted(Comparator.comparing(Animal::getOwner))
+                .collect(Collectors.toList());
+
+        for (Animal animal:animalSet ) {
+            System.out.println(animal);
         }
-        //todo в отсортированном порядке. Поля для сортировки –  хозяин, кличка животного, вес.
-        //return result;
+
+
+//        String result = "";
+//        Iterator<Animal> iterator = animalSet.iterator();
+//        while(iterator.hasNext()){
+//           // result =  iterator.next().toString();
+//            System.out.println( iterator.next() );
+//        }
+//        //todo в отсортированном порядке. Поля для сортировки –  хозяин, кличка животного, вес.
+//        //return result;
     }
 }
