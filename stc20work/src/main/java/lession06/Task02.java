@@ -1,9 +1,6 @@
 package lession06;
 
 import java.io.*;
-import java.lang.reflect.Array;
-import java.nio.ByteBuffer;
-import java.nio.channels.FileChannel;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -34,66 +31,69 @@ public class Task02 {
 
     public static void main(String[] args) throws IOException {
 
+        String[] jvmLangs = {" Java ", " Scala ", " Jruyby ", " Kotlin ", " Groovy "};
         List<String> listWords = readFile(MY_PATH);
-
-        String[] strLanguages = listWords.toArray(new String[listWords.size()]);
-
-
         System.out.println("------------- START -------------");
-        for (int i = 0; i < PARAGRAPH; i++) {
-            paragraphGen(listWords);
-        }
+        getFiles(TASK02_PATH, 4, 1000, jvmLangs, 1, listWords);
         System.out.print("\n" + "------------- END -------------");
 
-        getFiles(TASK02_PATH, 2, 1, strLanguages, 2);
-//todo fix getFiles
-
-        // sentenceGenerate(listWords);
     }
 
-    public static void getFiles(String path, int n, int size, String[] words, int probability) {
-
+    public static void getFiles(String path, int n, int size, String[] words, int probability, List<String> mainList) throws IOException {
+        for (int i = 1; i < n + 1; i++) {
+            writeToFileWhenSize(path + "/tmp" + i + ".txt", words, size, probability, mainList);
+        }
     }
 
-    public static void sentenceGenerate(List<String> listWords) {
+
+    static String sentenceGenerate(List<String> listWords, String probWord) {
 
         String words;
+        String result = "";
 
-        int wordsCount = getRandomInt(WORDS);
-        int mark = getRandomInt(2);
+        int wordsCount = makeRandomInt(WORDS);
 
         String[] signs = {"? ", "! ", ". "};
         String[] marks = {" ", " ", ", ", " "};
 
-
         for (int i = 0; i < wordsCount; i++) {
-            int elements = getRandomInt(listWords.size());
-            // System.out.println(i);
+            int elements = makeRandomInt(listWords.size());
+
             words = listWords.get(elements);
             if (i == 0) {
                 words = words.substring(0, 1).toUpperCase() + words.substring(1);
-            }
-            if (i == wordsCount - 1) {
-                words = words + getMarks(signs);
-                ;
+                result += words;
             }
             if (i > 0 && i < wordsCount - 1) {
-                words = words + getMarks(marks);
+                words = words + makeMarks(marks);
+                result += words;
             }
-            System.out.print(words);
+            if (i == wordsCount - 1) {
 
+                if (probWord == "#") {
+                    words = words + makeMarks(signs);
+                } else {
+                    words = words + probWord + makeMarks(signs);
+                }
+                result += words;
+            }
         }
 
+        return result;
     }
 
-    public static void paragraphGen(List<String> listWords) {
-        int sentenceCount = getRandomInt(SENTENCE);
-        System.out.println("sentenceCount - " + sentenceCount);
-
-        for (int i = 0; i < sentenceCount; i++) {
-            sentenceGenerate(listWords);
+    static String paragraphGen(List<String> listWords, String probWord) {
+        String result = "";
+        int sentenceCount = makeRandomInt(SENTENCE);
+        // System.out.println("sentenceCount - " + sentenceCount);
+        for (int i = 0; i < PARAGRAPH ; i++) {
+            for (int j = 0; j < sentenceCount; j++) {
+                result += sentenceGenerate(listWords, probWord);
+            }
+            result = result + " \n";
         }
-        System.out.print(" \n");
+
+        return result;
     }
 
     private static List<String> readFile(String path) throws IOException {
@@ -108,7 +108,7 @@ public class Task02 {
 
             String readLine = "";
 
-            System.out.println("Reading file..");
+            System.out.println("Reading source file.. with words...");
 
             while ((readLine = b.readLine()) != null) {
                 result.add(readLine);
@@ -121,15 +121,44 @@ public class Task02 {
 
         return result;
     }
+//
+//    private static void writeFileResult(String path, List<String> stringList, int counter) throws IOException {
+//        Files.write(Paths.get(path), stringList.toString().getBytes());
+//    }
 
-    private static int getRandomInt(int range) {
+    private static int makeRandomInt(int range) {
         range -= 1;
         return (int) (Math.random() * ++range) + 1;
     }
 
-    private static String getMarks(String[] items) {
+    private static String makeMarks(String[] items) {
         Random rand = new Random();
         return items[rand.nextInt(items.length)];
     }
 
+    private static void writeToFileWhenSize(String path, String[] words, int size, int prob, List<String> mainList) throws IOException {
+        String temp = "";
+        //  System.out.println("prob -" +val);
+        if (probability(prob)) {
+            temp = paragraphGen(mainList, makeMarks(words));
+        } else {
+            temp = paragraphGen(mainList, "#");
+        }
+        // System.out.println(temp);
+        File file = new File(path);
+        try (BufferedWriter writer = Files.newBufferedWriter(file.toPath())) {
+            while (file.length() < size) {
+                writer.write(temp);
+                writer.flush();
+            }
+            System.out.println(size + " KB Data is written to the file.!");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private static boolean probability(int prob) {
+        return new Random().nextInt(prob) == 0;
+    }
 }
