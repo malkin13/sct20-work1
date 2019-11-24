@@ -86,7 +86,7 @@ public class Task02 {
         String result = "";
         int sentenceCount = makeRandomInt(SENTENCE);
         // System.out.println("sentenceCount - " + sentenceCount);
-        for (int i = 0; i < PARAGRAPH ; i++) {
+        for (int i = 0; i < PARAGRAPH; i++) {
             for (int j = 0; j < sentenceCount; j++) {
                 result += sentenceGenerate(listWords, probWord);
             }
