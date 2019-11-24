@@ -7,6 +7,7 @@ public class MathBoxTest {
     private Number[] numbers = {1, 2, 3, 4, 4, 4, 5, 6};
     private MathBox mathBox = new MathBox(numbers);
     private ObjectBox objectBox = new ObjectBox(numbers);
+    private MathBoxNew mathBoxNew = new MathBoxNew(numbers);
 
     //MathBox
     @Test
@@ -45,4 +46,9 @@ public class MathBoxTest {
         Assert.assertEquals("The number equals", "ObjectBox{objects=[1, 2, 3, 4, 5]}", res);
     }
 
+    @Test
+    public void TestNewMathBox() {
+        mathBoxNew.addObject(9);
+        System.out.println(mathBoxNew);
+    }
 }

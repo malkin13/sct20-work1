@@ -1,5 +1,6 @@
 package lession03;
 
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -17,40 +18,47 @@ import java.util.stream.Collectors;
  */
 public class MathBoxNew extends ObjectBox {
 
-    private HashSet<Number> numbers;
+    private HashSet<Object> objects;
 
-//    public MathBoxNew(Number[] arrayOfNumber) {
-//        numbers = new HashSet<>(Arrays.asList(arrayOfNumber));
-//    }
+    public MathBoxNew(Number[] arrayOfNumber) {
+        super(arrayOfNumber);
+        //super.objects = new HashSet<>(Arrays.asList(arrayOfNumber));
+    }
 
-    public MathBoxNew(Object[] objects) {
-        super(objects);
+    @Override
+    public void addObject(Object toAdd) {
+        super.addObject(toAdd);
+    }
+
+    @Override
+    public void deleteObject(Object toRemove) {
+        super.deleteObject(toRemove);
     }
 
 
     public int summator() {
-        return numbers.stream()
+        return objects.stream()
                 .mapToInt(x -> (Integer) x)
                 .reduce(Integer::sum)
                 .orElse(0);
     }
 
     public void splitter(final int devider) {
-        numbers = numbers.stream()
+        objects = objects.stream()
                 .mapToInt(x -> (Integer) x)
                 .map(x -> x / devider)
                 .mapToObj(x -> (Number) x)
                 .collect(Collectors.toCollection(HashSet::new));
     }
 
-    public void remove(Integer num) {
-        numbers.remove(num);
+    public void removeInt(Integer num) {
+        objects.remove(num);
     }
 
     @Override
     public String toString() {
         return "MathBox{" +
-                "numbers=" + numbers +
+                "numbers=" + objects +
                 '}';
     }
 
@@ -59,11 +67,11 @@ public class MathBoxNew extends ObjectBox {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         MathBoxNew mathBox = (MathBoxNew) o;
-        return Objects.equals(numbers, mathBox.numbers);
+        return Objects.equals(objects, mathBox.objects);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(numbers);
+        return Objects.hash(objects);
     }
 }
