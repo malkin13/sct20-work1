@@ -1,8 +1,7 @@
-package lession03.task01;
+package lession03;
 
 import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 /**
  * Конструктор на вход получает массив Number. Элементы не могут повторяться.
