@@ -1,41 +1,47 @@
 package lession08;
 
-import java.io.Serializable;
 
-public class Owner implements Serializable {
+public class Owner {
 
-        private int age;
-        private String name;
+    private static final long serialVersionUID = 7829136421241571165L;
 
-        public Owner(int age,String name) {
-            this.age = age;
-            this.name = name;
-        }
+    private int age;
+    private String name;
 
-        int getAge() {
-            return age;
-        }
+    public Owner(int age, String name) {
+        super();
+        this.age = age;
+        this.name = name;
+    }
 
-        public void setAge(int age) {
-            this.age = age;
-        }
+    public Owner(){
+        super();
+    }
 
-        public String getName() {
-            return name;
-        }
+    int getAge() {
+        return age;
+    }
 
-        public void setName(String name) {
-            this.name = name;
-        }
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
 
-        @Override
-        public String toString() {
-            return "Person {" +
-                    "name='" + name + '\'' +
-                    ", age=" + age +
-                    '}';
-        }
+    @Override
+    public String toString() {
+        return "Person {" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                '}';
+    }
 
 
 }
