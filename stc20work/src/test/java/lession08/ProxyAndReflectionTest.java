@@ -1,5 +1,7 @@
 package lession08;
 
+import lesson08.Owner;
+import lesson08.ProxyAndReflection;
 import org.junit.Assert;
 import org.junit.Test;
 

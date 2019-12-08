@@ -1,6 +1,8 @@
-package lession08;
+package lesson08;
 
-
+/**
+ * Owner to serialize/desirialize
+ */
 public class Owner {
 
     private static final long serialVersionUID = 7829136421241571165L;

@@ -1,5 +1,6 @@
 package lession07;
 
+import lesson07.Threads;
 import org.junit.Test;
 
 /**
