@@ -1,6 +1,6 @@
 package lession08;
 
-import lesson08.Owner;
+import lesson08.OwnerImpl;
 import lesson08.ProxyAndReflection;
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,7 +14,7 @@ public class ProxyAndReflectionTest {
 
     @Test
     public void TestProxy() throws IOException, ClassNotFoundException {
-        Owner elena = new Owner(33,"Elena");
+        OwnerImpl elena = new OwnerImpl(33,"Elena");
 
         proxyAndReflection.serialize(elena,filePath);
         String elenaFromFile = proxyAndReflection.deSerialize(filePath).toString();
@@ -22,7 +22,7 @@ public class ProxyAndReflectionTest {
     }
     @Test
     public void TestProxy1() throws IOException, ClassNotFoundException {
-        proxyAndReflection.serialize(new Owner(10,"Andrey"),filePath);
+        proxyAndReflection.serialize(new OwnerImpl(10,"Andrey"),filePath);
         String andreyFromFile = proxyAndReflection.deSerialize(filePath).toString();
         String andrey = "Person {name='Andrey', age=10}";
         Assert.assertEquals(andrey,andreyFromFile);

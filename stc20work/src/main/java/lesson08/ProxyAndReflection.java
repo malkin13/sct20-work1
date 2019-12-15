@@ -2,7 +2,9 @@ package lesson08;
 
 import java.io.*;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.Proxy;
 import java.util.Base64;
 import java.util.HashMap;
 
@@ -18,14 +20,26 @@ import java.util.HashMap;
  */
 public class ProxyAndReflection {
 
-    public static void main(String[] args) throws IllegalAccessException, IOException, ClassNotFoundException, InstantiationException {
-        String filePath = "/Users/internet/IdeaProjects/STC-20/stc20work/src/main/resources/lession08.bin_";
+    public static void main(String[] args) {
 
-        Object obj = printFields(new Owner(10, "Andrey"));
-        System.out.println("object = " + obj);
+        Owner owner = new OwnerImpl();
+        System.out.println(owner.comeHere());
+        Owner ownerProxy = (Owner) Proxy.newProxyInstance(OwnerImpl.class.getClassLoader(),
+                new Class[]{Owner.class},
+                new OwnerInvolker());
 
-        serialize(obj, filePath);
-        deSerialize(filePath);
+//        System.out.println(ownerProxy.comeHere());
+
+
+
+            //System.out.println();
+
+
+        //        Object obj = printFields(new Owner(10, "Andrey"));
+//        System.out.println("object = " + obj);
+//
+//        serialize(obj, filePath);
+//        deSerialize(filePath);
     }
 
     /**
@@ -41,6 +55,34 @@ public class ProxyAndReflection {
         System.out.println("encoded - " + encoded);
         fileWriter.write(encoded);
         fileWriter.close();
+    }
+
+    static OwnerImpl writeToObject() throws NoSuchFieldException {
+        OwnerImpl ownerImpl = new OwnerImpl();
+        Class<? extends OwnerImpl> ownerClass = ownerImpl.getClass();
+
+        Field serialUIDField = ownerClass.getDeclaredField("serialVersionUID");
+        String name = serialUIDField.getName();
+        //System.out.println(name);
+        Class<?> type = serialUIDField.getType();
+        //System.out.println(type);
+        int modifiers = serialUIDField.getModifiers();
+        //System.out.println(modifiers);
+
+        Method[] declaredMethods = ownerClass.getDeclaredMethods();
+        for (Method method : declaredMethods) {
+            Class[] paramTypes = method.getParameterTypes();
+
+            System.out.print("Типы параметров: ");
+            for (Class paramType : paramTypes) {
+                //System.out.print(" " + paramType.getName());
+            }
+        }
+
+            //System.out.println("Имя метода: " + method.getName());
+            //System.out.println("Возвращаемый тип: " + method.getReturnType().getName());
+
+        return ownerImpl;
     }
 
     static String encoding(Object whatEncode) {
