@@ -1,62 +1,92 @@
 package lesson17;
 
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import lesson15_16_17.User;
+import lesson15_16_17.UserDao;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Set;
 
 import static lesson15_16_17.ConnectionFactory.getConnection;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 public class CRUDTest {
 
-    private static Connection connection = null;
+    private static Connection connection;
+    private static User john = new User();
+    private static UserDao userDao = new UserDao();
 
-    @BeforeClass
-    public static void beforeAllTests() throws SQLException {
+    @BeforeAll
+    public static void before() throws SQLException {
         connection = getConnection();
         connection.setAutoCommit(false);
-       // personsDao = new JdbcPersonsDao(JdbcEmbeddedConnection.getConnection());
-    }
 
+        // User john = new User();
+        john.setId(266L);
+        john.setName("John Smith");
+        john.setBirthday(Date.valueOf("1989-05-02"));
+        john.setLogin_id(1);
+        john.setCity("California");
+        john.setEmail("johnSmith@yandex.ru");
+        john.setDescr("real User");
 
-    @Test
-    void Create_rud() throws SQLException {
-        try (PreparedStatement insertStmt = connection.prepareStatement("INSERT INTO public.\"user\" VALUES(DEFAULT, '?', '?', 6, '?', '?', '?')")) {
-            insertStmt.setString(1, "Jonn Smith");
-            insertStmt.setDate(2, Date.valueOf("2019-11-01"));
-            insertStmt.setString(3, "Tokio");
-            insertStmt.setString(4, "JonnSmithJapanVarior@jp.com");
-            insertStmt.setString(5, "real_user");
+        System.out.println("== start connect and create user");
+        boolean createStatus = userDao.createUser(john, connection);
+
+        if (createStatus) {
+            System.out.println("-- user created");
+        } else {
+
         }
 
 
-       // Assert.assertEquals();
-    }
-    @Test
-    void c_Read_ud(){
-
     }
 
     @Test
-    void cr_Update_d(){
+    public void c_Read_ud() {
+        System.out.println("-- Read user test");
 
+        String t1 = john.toString();
+        String t2 = String.valueOf(userDao.getUser(266L, connection));
+        assertEquals(t1,t2);
     }
 
     @Test
-    void cru_Delete(){
+    public void cr_Update_d() {
+        System.out.println("-- Update user test");
+
+        john.setName("Mike Smith");
+        john.setCity("Moscow");
+        boolean updateStatus = userDao.updateUser(john, connection);
+
+
+        assertTrue(updateStatus);
+
+        String u1 = john.toString();
+        String u2 = String.valueOf(userDao.getUser(266L, connection));
+        assertEquals(u1,u2);
+    }
+
+    @Test
+    public void cru_Delete() {
+        System.out.println("-- Delete user test");
+        boolean deleteStatus = userDao.deleteUser(266L, connection);
+        assertTrue(deleteStatus);
 
     }
 
-    @AfterClass
-    public static void afterAllTest() throws SQLException {
-        connection.close();
+    @AfterAll
+    public static void after() throws SQLException {
+        System.out.println("== disconnect");
         connection.rollback();
+        connection.close();
     }
+
 }

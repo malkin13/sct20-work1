@@ -22,11 +22,11 @@ public class MathBox {
         numbers = new HashSet<>(Arrays.asList(arrayOfNumber));
     }
 
-    public int summator() {
-        return numbers.stream()
+    public String summator() {
+        return String.valueOf(numbers.stream()
                 .mapToInt(x -> (Integer) x)
                 .reduce(Integer::sum)
-                .orElse(0);
+                .orElse(0));
     }
 
     public void splitter(final int devider) {

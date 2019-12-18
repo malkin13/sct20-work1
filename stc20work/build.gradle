@@ -1,8 +1,7 @@
 plugins {
     id 'java'
-
+    id 'idea'
 }
-apply plugin: 'idea'
 
 group 'ru.mal'
 version '0.1'
@@ -14,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testImplementation('org.junit.jupiter:junit-jupiter:5.5.2')
     compileOnly 'org.projectlombok:lombok:1.18.4'
     annotationProcessor 'org.projectlombok:lombok:1.18.4'
     compile 'org.postgresql:postgresql:42.2.5'
@@ -24,5 +23,9 @@ dependencies {
 //        exclude group: 'commons-logging', module: 'commons-logging'
 //    }
     compile 'org.apache.commons:commons-dbcp2:2.1.1'
+}
+
+test {
+    useJUnitPlatform()
 }
 

@@ -1,7 +1,7 @@
 package lession07;
 
 import lesson07.Threads;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 /**
  * Test class for testing Thread Factorial
