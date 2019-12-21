@@ -1,35 +1,68 @@
 package lesson10;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
+import java.net.SocketException;
+import java.net.UnknownHostException;
+import java.util.Scanner;
 
 public class UDPClient2 {
-    public static final Integer SERVER_PORT = 4999; // Прослушиваемый порт
-    public static ServerSocket serverSocket = null; //TCP socket
 
     public static void main(String[] args) throws IOException {
-        serverSocket = new ServerSocket(SERVER_PORT,0, InetAddress.getByName("127.0.0.1"));
-        Socket socket = serverSocket.accept(); // Слушать!
 
-        InputStream fromClient = socket.getInputStream();
-        OutputStream toClient = socket.getOutputStream();
-        BufferedReader clientReader = new BufferedReader(new InputStreamReader(fromClient));
-        BufferedWriter clientWriter = new BufferedWriter(new OutputStreamWriter(toClient));
+        System.out.print("input Name  = ");
 
-        String message;
-        while ((message = clientReader.readLine()) != null) {
-            System.out.println("Server read: " + message);
-            clientWriter.write("\"" + message + "\" received \n");
-            clientWriter.flush();
+        try {
+            Scanner scanner = new Scanner(System.in);
+
+            String name = scanner.nextLine();
+
+            while (scanner.hasNext()) {
+                String message = scanner.next();
+                System.out.println("message - " + message);
+                sendAndReceive(name + "-=-" + message);
+
+                if (message.equals("quit")) {
+                    break;
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public static void send(String message) {
+        try {
+            byte[] data = message.getBytes();
+            InetAddress addr = InetAddress.getByName("127.0.0.1");
+            DatagramSocket ds = new DatagramSocket();
+            DatagramPacket pack = new DatagramPacket(data, data.length, addr, 7077);
+            ds.send(pack);
+            ds.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
+    static void sendAndReceive(String sentence) throws IOException {
+        byte[] sendData = new byte[1024];
+        byte[] receiveData = new byte[1024];
+        try {
+            InetAddress addr = InetAddress.getByName("127.0.0.1");
+            DatagramSocket ds = new DatagramSocket();
+            sendData = sentence.getBytes();
+            DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, addr, 7077);
+            ds.send(sendPacket);
+            DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+            ds.receive(receivePacket);
+            String modifiedSentence = new String(receivePacket.getData());
+            System.out.println("FROM SERVER:" + modifiedSentence);
+            ds.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
