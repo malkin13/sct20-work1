@@ -54,13 +54,13 @@ public class UDPClient2 {
             InetAddress addr = InetAddress.getByName("127.0.0.1");
             DatagramSocket ds = new DatagramSocket();
             sendData = sentence.getBytes();
-            DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, addr, 7077);
+            DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, addr, 9999);
             ds.send(sendPacket);
             DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
             ds.receive(receivePacket);
             String modifiedSentence = new String(receivePacket.getData());
             System.out.println("FROM SERVER:" + modifiedSentence);
-            ds.close();
+           // ds.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

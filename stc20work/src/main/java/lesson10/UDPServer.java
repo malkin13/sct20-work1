@@ -11,10 +11,6 @@ public class UDPServer {
     private DatagramSocket udpSocket;
     private int port;
 
-//    public oldUDPServer(int port) throws IOException {
-//        this.port = port;
-//        this.udpSocket = new DatagramSocket(this.port);
-//    }
 
     public UDPServer(int port) throws IOException {
         this.port = port;
@@ -46,32 +42,40 @@ public class UDPServer {
         }
     }
 
-//    private void newListen() throws IOException {
-//        byte[] receiveData = new byte[1024];
-//        byte[] sendData = new byte[1024];
-//
-//        while(true)
-//        {
-//            DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
-//            udpSocket.receive(receivePacket);
-//            String sentence = new String( receivePacket.getData());
-//            System.out.println("RECEIVED: " + sentence);
-//            InetAddress IPAddress = receivePacket.getAddress();
-//            port = receivePacket.getPort();
-//            String capitalizedSentence = sentence.toUpperCase();
-//            sendData = capitalizedSentence.getBytes();
-//            DatagramPacket sendPacket =
-//                    new DatagramPacket(sendData, sendData.length, IPAddress, port);
-//            udpSocket.send(sendPacket);
-//        }
-//    }
-//
+    private void newListen() throws IOException {
+
+        System.out.println("listen ....");
+        byte[] receiveData = new byte[1024];
+        byte[] sendData = new byte[1024];
+
+        while(true)
+        {
+            DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);
+            udpSocket.receive(receivePacket);
+            String sentence = new String( receivePacket.getData());
+            System.out.println("RECEIVED: " + sentence.trim());
+            InetAddress IPAddress = receivePacket.getAddress();
+            port = receivePacket.getPort();
+            String capitalizedSentence = sentence.toUpperCase();
+            sendData = capitalizedSentence.getBytes();
+            DatagramPacket sendPacket =
+                    new DatagramPacket(sendData, sendData.length, IPAddress, port);
+            udpSocket.send(sendPacket);
+        }
+    }
+
 
     public static void main(String[] args) throws Exception {
         UDPServer client = new UDPServer(7077);
-        client.listen();
-      //  client.newListen();
+
+
+        //get from client
+      //  client.listen();
+
+       //broadcast recive
+        client.newListen();
 
 
     }
+
 }
