@@ -1,10 +1,11 @@
-package lesson10.work;
+package lesson10.work.client;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.Scanner;
 
 public class MessageSender implements Runnable {
 
@@ -12,6 +13,7 @@ public class MessageSender implements Runnable {
     public final static int PORT = 7331;
     private DatagramSocket sock;
     private String hostname;
+    private boolean connected = false;
 
     MessageSender(DatagramSocket s, String h) {
         sock = s;
@@ -26,10 +28,10 @@ public class MessageSender implements Runnable {
     }
 
     public void run() {
-        boolean connected = false;
         do {
             try {
-                sendMessage("GREETINGS");
+               // System.out.print("input Name  = ");
+                startClient();
                 connected = true;
             } catch (Exception e) {
 
@@ -47,46 +49,35 @@ public class MessageSender implements Runnable {
             }
         }
     }
+
+
+    public boolean startClient() {
+                try {
+                    Scanner scanner = new Scanner(System.in);
+
+                    String name = scanner.nextLine();
+
+                    while (scanner.hasNext()) {
+                        String message = scanner.next();
+                        //System.out.println("message - " + message);
+
+                        sendMessage(name + "-=-" + message);
+                        if (message.equals("quit")) {
+                           connected = false;
+                           sock.disconnect();
+                           sock.close();
+                           break;
+
+
+                            //break;
+                            //throw new Exception("quit");
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    return false;
+                }
+                return true;
+    }
 }
 
-class MessageReceiver implements Runnable {
-    DatagramSocket sock;
-    byte buf[];
-
-    MessageReceiver(DatagramSocket s) {
-        sock = s;
-        buf = new byte[1024];
-    }
-
-    public void run() {
-        while (true) {
-            try {
-                DatagramPacket packet = new DatagramPacket(buf, buf.length);
-                sock.receive(packet);
-                String received = new String(packet.getData(), 0, packet.getLength());
-                System.out.println(received.trim());
-            } catch (Exception e) {
-                System.err.println(e);
-            }
-        }
-    }
-}
-
-class ChatClient {
-
-    public static void main(String args[]) throws Exception {
-
-        System.out.print("input Name  = ");
-
-
-        String host = "127.0.0.1";
-        DatagramSocket socket = new DatagramSocket();
-        MessageReceiver r = new MessageReceiver(socket);
-        MessageSender s = new MessageSender(socket, host);
-        Thread rt = new Thread(r);
-        Thread st = new Thread(s);
-        rt.start();
-        st.start();
-    }
-
-}
