@@ -23,6 +23,10 @@ public class CRUDTest {
     private static User john = new User();
     private static UserDao userDao = new UserDao();
 
+    /**
+     * Create user here
+     * @throws SQLException
+     */
     @BeforeAll
     public static void before() throws SQLException {
         connection = getConnection();

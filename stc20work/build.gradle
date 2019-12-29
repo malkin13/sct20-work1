@@ -1,7 +1,10 @@
 plugins {
     id 'java'
     id 'idea'
+    id 'org.gretty' version '2.2.0'
 }
+
+apply plugin: 'war'
 
 group 'ru.mal'
 version '0.1'
@@ -10,10 +13,12 @@ sourceCompatibility = 1.8
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
     testImplementation('org.junit.jupiter:junit-jupiter:5.5.2')
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.1.0'
     compileOnly 'org.projectlombok:lombok:1.18.4'
     annotationProcessor 'org.projectlombok:lombok:1.18.4'
     compile 'org.postgresql:postgresql:42.2.5'
@@ -23,6 +28,8 @@ dependencies {
 //        exclude group: 'commons-logging', module: 'commons-logging'
 //    }
     compile 'org.apache.commons:commons-dbcp2:2.1.1'
+    providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
+
 }
 
 test {
