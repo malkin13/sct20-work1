@@ -1,6 +1,13 @@
 package lesson22_23.dao;
 
 
+import lesson22_23.ConnectionManager.ConnectionManager;
+import lesson22_23.pojo.Mobile;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import javax.ejb.EJB;
+import javax.inject.Inject;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,9 +17,11 @@ import java.util.Collection;
 import java.util.List;
 
 
-public class MobileDaoJdbcImpl  {
-  /*
-  private static final Logger LOGGER = LoggerFactory.getLogger(MobileDaoJdbcImpl.class);
+@EJB
+public class MobileDaoJdbcImpl implements MobileDao  {
+
+    private static Logger LOGGER = LogManager.getLogger(MobileDaoJdbcImpl.class);
+
   public static final String INSERT_INTO_MOBILE = "INSERT INTO mobile values (DEFAULT, ?, ?, ?)";
   public static final String SELECT_FROM_MOBILE = "SELECT * FROM mobile WHERE id = ?";
   public static final String SELECT_ALL_FROM_MOBILE = "SELECT * FROM mobile";
@@ -31,6 +40,7 @@ public class MobileDaoJdbcImpl  {
       + ");\n"
       + "\n"
       + "alter table mobile owner to postgres;";
+
 
 
   private ConnectionManager connectionManager;
@@ -133,5 +143,5 @@ public class MobileDaoJdbcImpl  {
     return new ArrayList<>();
   }
 
-   */
+
 }

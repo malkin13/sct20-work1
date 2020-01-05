@@ -9,14 +9,17 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 
-@WebServlet(name = "lesson22_23.servlet.MainServlet", urlPatterns = {"hello"}, loadOnStartup = 1)
+//@WebServlet(name = "lesson22_23.servlet.MainServlet", urlPatterns = {"/"}, loadOnStartup = 1)
 public class MainServlet extends HttpServlet {
 
-@Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.getWriter().print("Hello, World!");
-    }
+//    private static final long serialVersionUID = 1L;
+//
+//    @Override
+//    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+//            throws IOException {
+//        resp.getOutputStream().write("Hello World.".getBytes());
+//    }
+
 //@Override
 //    protected void doPost(HttpServletRequest request, HttpServletResponse response)
 //            throws ServletException, IOException {

@@ -10,12 +10,13 @@ import java.util.stream.Collectors;
  */
 public class AnimalDao {
 
-    public static final Set<Animal> animalSet =new HashSet<Animal>();
+    public static final Set<AnimalData> animalSet =new HashSet<AnimalData>();
 
     /**
      * main method init
      * @throws Exception
      */
+
     public void initAnimals() throws Exception {
         Person elena = new Person();
         elena.setName("Elena");
@@ -27,9 +28,9 @@ public class AnimalDao {
         kolya.setAge(52);
         kolya.setSex(Person.sex.MAN);
 
-        Animal dog = new Animal(1,"senya",elena,59.2);
-        Animal cat = new Animal(2,"tosya",elena,6.1);
-        Animal cat1 = new Animal(3,"busya",kolya,4.0);
+        AnimalData dog = new AnimalData(1,"senya",elena,59.2);
+        AnimalData cat = new AnimalData(2,"tosya",elena,6.1);
+        AnimalData cat1 = new AnimalData(3,"busya",kolya,4.0);
 
         animalSet.add(dog);
         animalSet.add(cat);
@@ -39,13 +40,13 @@ public class AnimalDao {
        // System.out.println();
         getAllAnimals();
         System.out.println("-- add Animals-- ");
-        Animal dog1 = new Animal(4,"lana",kolya,11.0);
+        AnimalData dog1 = new AnimalData(4,"lana",kolya,11.0);
         // throw addAnimal(dog);
         addAnimal(dog1);
         System.out.println("-- find Animals-- ");
         findAnimalByMoniker(dog1.getMoniker());
         System.out.println("-- update Animals-- ");
-        Animal dog1_new = new Animal(4,"nusha",kolya,10.0);
+        AnimalData dog1_new = new AnimalData(4,"nusha",kolya,10.0);
         updateAnimal(dog1.getId(),dog1_new);
 
     }
@@ -56,7 +57,7 @@ public class AnimalDao {
      * @return
      * @throws Exception when already exist
      */
-    public void addAnimal(Animal animal) throws Exception {
+    public void addAnimal(AnimalData animal) throws Exception {
         if(animalSet.add(animal)){
             System.out.println("added"+ animal);
         }else{
@@ -70,8 +71,8 @@ public class AnimalDao {
      * @param newAnimal animal to add
      * @throws Exception when already exist
      */
-    public void updateAnimal(Integer id,Animal newAnimal) throws Exception {
-        for (Animal animal:animalSet ) {
+    public void updateAnimal(Integer id, AnimalData newAnimal) throws Exception {
+        for (AnimalData animal:animalSet ) {
             if (animal.getId().equals(id)) {
                 deleteAnimal(animal);
                 addAnimal(newAnimal);
@@ -83,7 +84,7 @@ public class AnimalDao {
      * remove animal
      * @param animal to remove
      */
-    public void deleteAnimal(Animal animal) {
+    public void deleteAnimal(AnimalData animal) {
         boolean result = animalSet.remove(animal);
         if(result){
             System.out.println(animal+ " was removed");
@@ -98,7 +99,7 @@ public class AnimalDao {
      * @param animalMoniker  to find
      */
     public void findAnimalByMoniker(String animalMoniker) {
-        Iterator<Animal> iterator = animalSet.iterator();
+        Iterator<AnimalData> iterator = animalSet.iterator();
         boolean found = false;
         while(iterator.hasNext()){
             found = iterator.next().getMoniker().equals(animalMoniker);
@@ -115,14 +116,14 @@ public class AnimalDao {
      * show all animals
      */
     public void getAllAnimals() {
-        animalSet.stream().sorted(new Comparator<Animal>() {
+        animalSet.stream().sorted(new Comparator<AnimalData>() {
             @Override
-            public int compare(Animal a1, Animal a2) {
+            public int compare(AnimalData a1, AnimalData a2) {
                 return a1.getMoniker().compareTo(a2.getMoniker());
             }
         }).collect(Collectors.toList());
 
-        for (Animal animal:animalSet ) {
+        for (AnimalData animal:animalSet ) {
             System.out.println(animal);
         }
 

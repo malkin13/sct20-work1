@@ -6,7 +6,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import sun.jvm.hotspot.utilities.Assert;
 
 import java.sql.Connection;
 import java.sql.SQLException;
